@@ -21,11 +21,22 @@ Office.onReady((info) => {
   }
 });
 
+/***************************************************
+ * ShowConfig()
+ * 
+ * Show the Config <div> that's otherwise hidden
+ ***************************************************/
 export async function ShowConfig() {
    document.getElementById("hostname").value=Office.context.roamingSettings.get('host');
    document.getElementById("config-pane").style.display="flex";
 }
 
+/***************************************************
+ * SaveConfig()
+ * 
+ * Saves the config values to the roamingSettings
+ * structure
+ ***************************************************/
 export async function SaveConfig() {
    const sHost=document.getElementById("hostname").value;
    Office.context.roamingSettings.set('host',sHost);
@@ -34,10 +45,14 @@ export async function SaveConfig() {
    document.getElementById("config-pane").style.display="none";
 }
 
+/*************************************************
+ * run()
+ * 
+ * Sends the message contents to the osTicket API
+ * in order to create a support ticket
+ ************************************************/
 export async function run() {
-  /**
-   * Insert your Outlook code here
-   */
+
 
   const item = Office.context.mailbox.item;
   const ticket = {};
