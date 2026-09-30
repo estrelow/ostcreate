@@ -8,7 +8,7 @@
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Contoso Task Pane Add-in</title>
+    <title>Create support ticket</title>
 
     <!-- Office JavaScript API -->
     <script type="text/javascript" src="https://appsforoffice.microsoft.com/lib/1/hosted/office.js"></script>
@@ -22,31 +22,32 @@
 
 <body class="ms-font-m ms-welcome ms-Fabric">
     <header class="ms-welcome__header ms-bgColor-neutralLighter">
-        <img width="90" height="90" src="../../assets/logo-filled.png" alt="Contoso" title="Contoso" />
-        <h1 class="ms-font-su">Welcome</h1>
+        <img height="90"  alt="Contoso" title="Support ticket" id="logo"/>
+        <h1 class="ms-font-su">Support ticket</h1>
     </header>
     <section id="sideload-msg" class="ms-welcome__main">
         <h2 class="ms-font-xl">Please <a target="_blank" href="https://learn.microsoft.com/office/dev/add-ins/testing/test-debug-office-add-ins#sideload-an-office-add-in-for-testing">sideload</a> your add-in to see app body.</h2>
     </section>
     <main id="app-body" class="ms-welcome__main" style="display: none;">
-        <h2 class="ms-font-xl"> Discover what Office Add-ins can do for you today! </h2>
-        <ul class="ms-List ms-welcome__features">
-            <li class="ms-ListItem">
-                <i class="ms-Icon ms-Icon--Ribbon ms-font-xl"></i>
-                <span class="ms-font-m">Achieve more with Office integration</span>
-            </li>
-            <li class="ms-ListItem">
-                <i class="ms-Icon ms-Icon--Unlock ms-font-xl"></i>
-                <span class="ms-font-m">Unlock features and functionality</span>
-            </li>
-            <li class="ms-ListItem">
-                <i class="ms-Icon ms-Icon--Design ms-font-xl"></i>
-                <span class="ms-font-m">Create and visualize like a pro</span>
-            </li>
+        <h2 class="ms-font-xl">Create support ticket</h2>
+        <div id="config-pane" style="display: none;">
+        <ul>
+        <p>Support host name: <br><input id='hostname'></p>
+        <p>API key: <br><input id='api-key'></p>
+           <div role="button" id="config-save" class="ms-Button ms-font-xl ms-Button--hero">
+             <span class="ms-Button-label">Save Options</span>
+            </div>
+       
         </ul>
-        <p class="ms-font-l">Modify the source files, then click <b>Run</b>.</p>
+
+        </div>
+        <div role="button" id="config-button" class="ms-welcome__action ms-Button ms-Button--hero ms-font-xl">
+             <span class="ms-Button-label">Click here for options</span>
+            </div>
+
+        <p class="ms-font-l">Click the below button to create a ticket for this message.</p>
         <div role="button" id="run" class="ms-welcome__action ms-Button ms-Button--hero ms-font-xl">
-            <span class="ms-Button-label">Run</span>
+            <span class="ms-Button-label">Create ticket</span>
         </div>
         <p><label id="item-subject"></label></p>
     </main>

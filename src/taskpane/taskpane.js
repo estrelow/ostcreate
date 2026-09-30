@@ -6,12 +6,33 @@
 /* global document, Office */
 
 Office.onReady((info) => {
+
+  const sHost=Office.context.roamingSettings.get('host');
+
   if (info.host === Office.HostType.Outlook) {
     document.getElementById("sideload-msg").style.display = "none";
     document.getElementById("app-body").style.display = "flex";
+    document.getElementById("logo").src=sHost+'/scp/logo.php?login';
     document.getElementById("run").onclick = run;
+    document.getElementById("config-button").onclick = ShowConfig;
+    document.getElementById("config-save").onclick = SaveConfig;
+   
+
   }
 });
+
+export async function ShowConfig() {
+   document.getElementById("hostname").value=Office.context.roamingSettings.get('host');
+   document.getElementById("config-pane").style.display="flex";
+}
+
+export async function SaveConfig() {
+   const sHost=document.getElementById("hostname").value;
+   Office.context.roamingSettings.set('host',sHost);
+   Office.context.roamingSettings.set('api_key',document.getElementById("api-key").value);
+   document.getElementById("logo").src=sHost+'/scp/logo.php?login';
+   document.getElementById("config-pane").style.display="none";
+}
 
 export async function run() {
   /**
@@ -20,10 +41,12 @@ export async function run() {
 
   const item = Office.context.mailbox.item;
   const ticket = {};
-  const api_key="C987FCC9C5A4CCAD620C190514916220";
-  const url="https://soporte.moller.cl/api/tickets.json";
+  const api_key=Office.context.roamingSettings.get('api_key');
+  const sHost=Office.context.roamingSettings.get('host');
 
-  ticket.email="esf@moller.cl";
+  const url=sHost+"/api/tickets.json";
+
+  ticket.email=item.from.emailAddress;
   ticket.subject=item.subject;
   ticket.message="Necesito una ayuda";
   ticket.name=item.from.emailAddress;
@@ -39,7 +62,7 @@ export async function run() {
   });
 
   const sMsg=JSON.stringify(ticket);
-  console.log(sMsg);
+  // console.log(sMsg);
   const hKey=new Headers();
   hKey.append('X-API-Key',api_key);
   hKey.append('Content-type','application/json');
