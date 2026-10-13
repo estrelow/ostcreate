@@ -45,6 +45,12 @@ export async function SaveConfig() {
    document.getElementById("config-pane").style.display="none";
 }
 
+/*****************************************************
+ * sendTicket()
+ * 
+ * Sends a support ticket by the time all the async
+ * calls have completed and the ticket object is fully populated
+ *****************************************************/
 function sendTicket(ticket) {
 
   const api_key=Office.context.roamingSettings.get('api_key');
@@ -99,7 +105,7 @@ export async function run() {
     return;
   } else if (bodyResult.status === Office.AsyncResultStatus.Succeeded) {
 
-    ticket.message=bodyResult.value;
+    ticket.message='data:text/html,<html>'+bodyResult.value+'</html>';
     sendTicket(ticket);
   }
   });
