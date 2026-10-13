@@ -45,36 +45,12 @@ export async function SaveConfig() {
    document.getElementById("config-pane").style.display="none";
 }
 
-/*************************************************
- * run()
- * 
- * Sends the message contents to the osTicket API
- * in order to create a support ticket
- ************************************************/
-export async function run() {
+function sendTicket(ticket) {
 
-
-  const item = Office.context.mailbox.item;
-  const ticket = {};
   const api_key=Office.context.roamingSettings.get('api_key');
   const sHost=Office.context.roamingSettings.get('host');
-
   const url=sHost+"/api/tickets.json";
 
-  ticket.email=item.from.emailAddress;
-  ticket.subject=item.subject;
-  ticket.message="Necesito una ayuda";
-  ticket.name=item.from.emailAddress;
-
-  item.body.getAsync(Office.CoercionType.Html, (bodyResult) => {
-  if (bodyResult.status === Office.AsyncResultStatus.Failed) {
-    console.log(`Failed to get body: ${bodyResult.error.message}`);
-    return;
-  } else if (bodyResult.status === Office.AsyncResultStatus.Succeeded) {
-
-    ticket.message=bodyResult.value;
-  }
-  });
 
   const sMsg=JSON.stringify(ticket);
   // console.log(sMsg);
@@ -98,5 +74,36 @@ export async function run() {
     console.error('Error:', error);
   });
 
+}
+/*************************************************
+ * run()
+ * 
+ * Sends the message contents to the osTicket API
+ * in order to create a support ticket
+ ************************************************/
+export async function run() {
+
+
+  const item = Office.context.mailbox.item;
+  const ticket = {};
+
+  //ticket.email=item.from.emailAddress;
+  ticket.email="esf@moller.cl";
+  ticket.subject=item.subject;
+  ticket.message="Necesito una ayuda";
+  ticket.name=item.from.emailAddress;
+
+  item.body.getAsync(Office.CoercionType.Html, (bodyResult) => {
+  if (bodyResult.status === Office.AsyncResultStatus.Failed) {
+    console.log(`Failed to get body: ${bodyResult.error.message}`);
+    return;
+  } else if (bodyResult.status === Office.AsyncResultStatus.Succeeded) {
+
+    ticket.message=bodyResult.value;
+    sendTicket(ticket);
+  }
+  });
+
+  
  
 }
