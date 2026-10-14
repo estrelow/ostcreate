@@ -94,7 +94,7 @@ export async function run() {
   const ticket = {};
 
   //ticket.email=item.from.emailAddress;
-  ticket.email="esf@moller.cl";
+  ticket.email=item.from.emailAddress;
   ticket.subject=item.subject;
   ticket.message="Necesito una ayuda";
   ticket.name=item.from.emailAddress;
