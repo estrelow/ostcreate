@@ -41,6 +41,7 @@ export async function SaveConfig() {
    const sHost=document.getElementById("hostname").value;
    Office.context.roamingSettings.set('host',sHost);
    Office.context.roamingSettings.set('api_key',document.getElementById("api-key").value);
+   Office.context.roamingSettings.saveAsync();
    document.getElementById("logo").src=sHost+'/scp/logo.php?login';
    document.getElementById("config-pane").style.display="none";
 }
