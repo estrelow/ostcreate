@@ -49,6 +49,14 @@
         <div role="button" id="run" class="ms-welcome__action ms-Button ms-Button--hero ms-font-xl">
             <span class="ms-Button-label">Create ticket</span>
         </div>
+        <div id="working" style="display: none;">
+            <img src="images/loading.gif" alt="Working..." /> 
+         </div>
+         <div id="result" style="display: none;">
+            <p class="ms-font-l">Ticket created successfully.</p>
+            <p class="ms-font-l">Ticket ID: <span id="ticket-id"></span></p>
+            <p class="ms-font-l">Ticket URL: <a id="ticket-url" href="" target="_blank"></a></p>
+         </div>
         <p><label id="item-subject"></label></p>
     </main>
 </body>

@@ -75,7 +75,12 @@ function sendTicket(ticket) {
   fetch(ost)
   .then(response => response.text())
   .then(data => {
-    console.log('Success:', data);
+    document.getElementById("working").style.display="none";
+    document.getElementById("result").style.display="block";
+    const ticket=data;
+    document.getElementById("ticket-id").textContent=ticket;
+    document.getElementById("ticket-url").href=ticket.url;
+    document.getElementById("ticket-url").textContent=sHost+"/scp/tickets.php?id="+ticket;
   })
   .catch((error) => {
     console.error('Error:', error);
@@ -94,11 +99,13 @@ export async function run() {
   const item = Office.context.mailbox.item;
   const ticket = {};
 
+  document.getElementById("working").style.display="block";
+  document.getElementById("run").style.display="none";
   //ticket.email=item.from.emailAddress;
   ticket.email=item.from.emailAddress;
   ticket.subject=item.subject;
   ticket.message="Necesito una ayuda";
-  ticket.name=item.from.emailAddress;
+  ticket.name=item.from.displayName;
 
   item.body.getAsync(Office.CoercionType.Html, (bodyResult) => {
   if (bodyResult.status === Office.AsyncResultStatus.Failed) {
