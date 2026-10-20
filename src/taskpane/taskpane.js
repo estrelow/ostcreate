@@ -73,18 +73,23 @@ function sendTicket(ticket) {
   const ost=new Request(url, options);
 
   fetch(ost)
-  .then(response => response.text())
-  .then(data => {
-    document.getElementById("working").style.display="none";
-    document.getElementById("result").style.display="block";
-    const ticket=data;
-    document.getElementById("ticket-id").textContent=ticket;
-    document.getElementById("ticket-url").href=ticket.url;
-    document.getElementById("ticket-url").textContent=sHost+"/scp/tickets.php?id="+ticket;
-  })
-  .catch((error) => {
-    console.error('Error:', error);
-  });
+  .then(response =>  {
+    //In osTicket API a successful call is actually a 201 response code, not 200
+    if (response.status == 201) {
+       document.getElementById("working").style.display="none";
+       const ticket=response.text();
+       document.getElementById("ticket-id").textContent=ticket;
+       document.getElementById("ticket-url").href=sHost+"/scp/tickets.php?id="+ticket;
+       document.getElementById("ticket-url").textContent="See ticket in osTicket";
+       document.getElementById("result").style.display="block";
+       return ticket;
+  } else {
+       document.getElementById("working").style.display="none";
+       document.getElementById("result").style.display="block";
+       document.getElementById("result").textContent="Failed to create ticket";
+       return null;
+  }}
+);
 
 }
 /*************************************************
